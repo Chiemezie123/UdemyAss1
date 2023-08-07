@@ -1,7 +1,16 @@
-import ExpenseItem from './Components/ExpenseItem';
-import "./App.css"
-
+import ExpenseItem from "./Components/Expenses/ExpenseItem";
+import "./App.css";
+import Card from './Components/UI/Card';
+import NewExpenses from "./Components/NewExpenses/NewExpenses";
+import ExpensesFilter from "./Components/ExpenseFilter/ExpenseFilter";
 function App() {
+
+
+  const addExpenseHandler = expense => {
+    console.log('In App.js');
+    console.log(expense);
+  };
+
   const expenses = [
     {
       id: 'e1',
@@ -23,17 +32,27 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
+
   const ExpenseArray = expenses.map((expense) =>{
     return <ExpenseItem title={expense.title} amount={expense.amount} date={expense.date}/>
   })
 
+  const datePicker =(freshDate)=>{
+    const date = freshDate;
+    console.log(date)
+  }
   return (
-    <div>
-      <h2>Let's get started!</h2>
-      <div className='expenses'>
-      {ExpenseArray}
-      </div>
-    </div>
+      <Card>
+          <div>
+     
+            <NewExpenses onAddExpense={addExpenseHandler}/>
+         
+            <div className='expenses'>
+            <ExpensesFilter dateProps={datePicker}/> 
+            {ExpenseArray}
+            </div>
+        </div>
+      </Card>
   );
 }
 
