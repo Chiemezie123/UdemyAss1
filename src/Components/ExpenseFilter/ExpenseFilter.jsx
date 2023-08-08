@@ -3,9 +3,10 @@ import React from 'react';
 import './ExpenseFilter.css';
 
 const ExpensesFilter = ({dateProps}) => {
+
     const runFunction =(e)=>{
-        const result = e.target.value;
-        dateProps(result);
+        const result = parseInt(e.target.value);
+        dateProps(new Date(result,0,1));
     }
   return (
     <div className='expenses-filter'>

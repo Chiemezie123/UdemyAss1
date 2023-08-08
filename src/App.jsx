@@ -3,14 +3,13 @@ import "./App.css";
 import Card from './Components/UI/Card';
 import NewExpenses from "./Components/NewExpenses/NewExpenses";
 import ExpensesFilter from "./Components/ExpenseFilter/ExpenseFilter";
+import { useState } from "react";
 function App() {
 
 
-  const addExpenseHandler = expense => {
-    console.log('In App.js');
-    console.log(expense);
-  };
-
+  
+ 
+  
   const expenses = [
     {
       id: 'e1',
@@ -32,14 +31,20 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
+  const [expensee, setexpensee] = useState(expenses);
 
-  const ExpenseArray = expenses.map((expense) =>{
-    return <ExpenseItem title={expense.title} amount={expense.amount} date={expense.date}/>
-  })
+  const addExpenseHandler = expenser => {
+    setexpensee((prev)=> [...prev, expenser]);
+    console.log(expenser)
+  };
+
+const test = expensee.map(expense => expense);
+console.log("test", test)
+  // const ExpenseArray =
 
   const datePicker =(freshDate)=>{
-    const date = freshDate;
-    console.log(date)
+    setexpensee(prev=>prev.filter((exp)=>{
+      return exp.date.getFullYear() === freshDate.getFullYear()}))
   }
   return (
       <Card>
@@ -49,7 +54,10 @@ function App() {
          
             <div className='expenses'>
             <ExpensesFilter dateProps={datePicker}/> 
-            {ExpenseArray}
+
+            { expensee.map((expense,index) =>{
+    return <ExpenseItem title={expense.title} amount={expense.amount} date={expense.date} index={index}/>
+  })}
             </div>
         </div>
       </Card>
