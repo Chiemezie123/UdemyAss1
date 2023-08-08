@@ -3,6 +3,7 @@ import "./App.css";
 import Card from './Components/UI/Card';
 import NewExpenses from "./Components/NewExpenses/NewExpenses";
 import ExpensesFilter from "./Components/ExpenseFilter/ExpenseFilter";
+import ExpenseList from "./Components/ExpenseList/ExpenseList";
 import { useState } from "react";
 function App() {
 
@@ -32,9 +33,10 @@ function App() {
     },
   ];
   const [expensee, setexpensee] = useState(expenses);
+  const [filterDateValue, setFilterDateValue] = useState([]);
 
   const addExpenseHandler = expenser => {
-    setexpensee((prev)=> [...prev, expenser]);
+    setexpensee((prev)=> [  expenser, ...prev]);
     console.log(expenser)
   };
 
@@ -42,10 +44,12 @@ const test = expensee.map(expense => expense);
 console.log("test", test)
   // const ExpenseArray =
 
-  const datePicker =(freshDate)=>{
-    setexpensee(prev=>prev.filter((exp)=>{
-      return exp.date.getFullYear() === freshDate.getFullYear()}))
-  }
+  const datePicker = (freshDate) => {
+    const filteredExpenses = expensee.filter(
+      (exp) => exp.date.getFullYear() === freshDate.getFullYear()
+    );
+    setFilterDateValue(filteredExpenses);
+  };
   return (
       <Card>
           <div>
@@ -54,10 +58,8 @@ console.log("test", test)
          
             <div className='expenses'>
             <ExpensesFilter dateProps={datePicker}/> 
-
-            { expensee.map((expense,index) =>{
-    return <ExpenseItem title={expense.title} amount={expense.amount} date={expense.date} index={index}/>
-  })}
+            <ExpenseList filterDateValue={filterDateValue}/>
+           
             </div>
         </div>
       </Card>
